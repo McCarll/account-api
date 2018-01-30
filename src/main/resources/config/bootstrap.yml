@@ -1,0 +1,10 @@
+PROJECT_NAME: client-api
+
+management.contextPath: /admin
+management.security.enabled: false
+management.health.config.enabled: false
+
+---
+spring:
+  profiles: test,development
+
