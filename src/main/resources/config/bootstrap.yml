@@ -1,4 +1,4 @@
-PROJECT_NAME: client-api
+PROJECT_NAME: account-api
 
 management.contextPath: /admin
 management.security.enabled: false

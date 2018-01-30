@@ -1,4 +1,4 @@
-package ru.mccarl.client.api.aspect;
+package ru.mccarl.account.api.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Slf4j
 public class ServiceAspect {
 
-    @Pointcut("execution(* ru.mccarl.client.api.web.Controller.*(..))")
+    @Pointcut("execution(* ru.mccarl.account.api.web.Controller.*(..))")
     public void allControllerMethods() {}
 
     @Before("allControllerMethods()")

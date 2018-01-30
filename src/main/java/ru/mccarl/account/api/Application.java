@@ -1,4 +1,4 @@
-package ru.mccarl.client.api;
+package ru.mccarl.account.api;
 
 /**
  * Created by vrudometkin on 24/11/2017.

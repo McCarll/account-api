@@ -1,4 +1,4 @@
-package ru.mccarl.client.api.configuration;
+package ru.mccarl.account.api.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("ru.mccarl.order.api.web"))
+                .apis(RequestHandlerSelectors.basePackage("ru.mccarl.account.api.web"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())

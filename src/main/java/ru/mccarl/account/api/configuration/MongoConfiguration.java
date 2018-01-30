@@ -1,4 +1,4 @@
-package ru.mccarl.client.api.configuration;
+package ru.mccarl.account.api.configuration;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;

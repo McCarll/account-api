@@ -13,9 +13,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import ru.mccarl.client.api.Application;
-import ru.mccarl.client.api.entity.Client;
-import ru.mccarl.client.api.repository.ClientRepository;
+import ru.mccarl.account.api.Application;
+import ru.mccarl.account.api.entity.Account;
+import ru.mccarl.account.api.repository.AccountRepository;
 
 /**
  * Created by vrudometkin on 29/01/2018.
@@ -32,23 +32,21 @@ public class JTest extends Specifications{
     private WebApplicationContext webApplicationContext;
 
     @MockBean
-    private ClientRepository clientRepository;
+    private AccountRepository accountRepository;
 
     @Before
     public void setup() throws Exception{
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        Client client = new Client();
-        client.setName("test");
-        client.setSecondName("test");
-        Mockito.when(clientRepository.findOne(Mockito.anyString())).thenReturn(client);
+        Account account = new Account();
+        account.setName("test");
+        Mockito.when(accountRepository.findOne(Mockito.anyString())).thenReturn(account);
     }
 
     @Test
-    public void getClient() throws Exception{
-        Client client = new Client();
-        client.setName("test");
-        client.setSecondName("test");
-        mockMvc.perform(MockMvcRequestBuilders.get("/clients"))
+    public void getAccount() throws Exception{
+        Account account = new Account();
+        account.setName("test");
+        mockMvc.perform(MockMvcRequestBuilders.get("/accounts"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 

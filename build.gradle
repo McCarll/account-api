@@ -1,4 +1,4 @@
-group 'client-api'
+group 'account-api'
 version '1.0-SNAPSHOT'
 
 buildscript {

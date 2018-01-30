@@ -1,13 +1,15 @@
-package ru.mccarl.client.api.web;
+package ru.mccarl.account.api.web;
 
 import io.swagger.annotations.ApiOperation;
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.mccarl.client.api.entity.Client;
-import ru.mccarl.client.api.repository.ClientRepository;
+import ru.mccarl.account.api.repository.AccountRepository;
+import ru.mccarl.account.api.entity.Account;
 
 /**
  * Created by vrudometkin on 24/11/2017.
@@ -18,49 +20,57 @@ import ru.mccarl.client.api.repository.ClientRepository;
 public class Controller {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private AccountRepository accountRepository;
 
-    @ApiOperation(value = "Получение клиентов")
-    @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    public ResponseEntity getClients(){
-        return ResponseEntity.ok(clientRepository.findAll());
+    @ApiOperation(value = "Получение списка счетов")
+    @RequestMapping(value = "/accounts", method = RequestMethod.GET)
+    public ResponseEntity getAccounts(){
+        return ResponseEntity.ok(accountRepository.findAll());
     }
 
-    @ApiOperation(value = "Получение клиента")
-    @RequestMapping(value = "/clients", method = RequestMethod.GET, params = "id")
-    public ResponseEntity getClient(@RequestParam String id){
-        return ResponseEntity.ok(clientRepository.findOne(id));
+    @ApiOperation(value = "Получение счета по id")
+    @RequestMapping(value = "/accounts", method = RequestMethod.GET, params = "id")
+    public ResponseEntity getAccount(@RequestParam String id){
+        return ResponseEntity.ok(accountRepository.findOne(id));
     }
 
-    @ApiOperation(value = "Добавление клиента")
-    @PostMapping("/clients")
-    public ResponseEntity addClient(@RequestBody Client client){
-        return ResponseEntity.ok(clientRepository.save(client));
+    @ApiOperation(value = "Добавление счета")
+    @PostMapping("/accounts")
+    public ResponseEntity addAccount(@RequestBody Account account){
+        return ResponseEntity.ok(accountRepository.save(account));
     }
 
-    @ApiOperation(value = "Добавление параметров клиента")
-    @PutMapping("/clients")
-    public ResponseEntity putAccountForClient(
-            @RequestBody Client client){
-        Client oldClient = clientRepository.findOne(client.get_id().toString());
-        BeanUtils.copyProperties(oldClient, client);
-        clientRepository.save(oldClient);
-        return ResponseEntity.ok(oldClient);
+    @ApiOperation(value = "Добавление параметров счета")
+    @PutMapping("/accounts")
+    public ResponseEntity putAccount(
+            @RequestBody Account account){
+        Account oldAccount = accountRepository.findOne(account.get_id().toString());
+        BeanUtils.copyProperties(oldAccount, account);
+        accountRepository.save(oldAccount);
+        return ResponseEntity.ok(oldAccount);
     }
 
-    @ApiOperation(value = "Изменение свойств клиента")
-    @PatchMapping("/clients")
-    public ResponseEntity changeClientInfo(@RequestBody Client client){
-        Client oldClient = clientRepository.findBySecondName(client.getSecondName());
-        BeanUtils.copyProperties(oldClient, client);
-        clientRepository.save(oldClient);
-        return ResponseEntity.ok(oldClient);
+    @ApiOperation(value = "Изменение свойств счета")
+    @PatchMapping("/accounts")
+    public ResponseEntity changeAccountInfo(@RequestBody Account account){
+        Account oldAccount = accountRepository.findOne(account.get_id().toString());
+        BeanUtils.copyProperties(oldAccount, account);
+        accountRepository.save(oldAccount);
+        return ResponseEntity.ok(oldAccount);
     }
 
-    @ApiOperation(value = "Удаление клиента")
-    @DeleteMapping("/clients")
-    public ResponseEntity deleteClient(@RequestBody Client client){
-        clientRepository.delete(client.getSecondName());
+    @ApiOperation(value = "Удаление счета")
+    @DeleteMapping("/accounts")
+    public ResponseEntity deleteAccount(@RequestParam ObjectId id){
+        accountRepository.delete(id.toString());
         return ResponseEntity.ok().build();
     }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity handleValidationException(Throwable e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
 }
